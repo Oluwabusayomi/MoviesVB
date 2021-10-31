@@ -6,6 +6,14 @@ The server itself is implemented in C# Net5.0 and uses MongoDb for persistence. 
 
 The server catches exception globally and logs the catched exception so that you could have an idea of the exception whithout having to look into the code.
 
+## The Project Structure
+The project is structured around Cean Achitecture in order to achieve separation of concerns. The Project Solution consists of 5 rojects in the following order
+- Data: This is a .Net5.0 class library for implementing all that has to do with the persistence. It uses repository pattern.
+- Core: A .Net 5.0 class library that serves as core of the application. More like the project Domain that other project reference.
+- DomainService:This project implements all the business logic pertaining to the application.
+- UIApi: An asp.net web application through which clients communicates to the server. More a like a presentation layer.
+- Test: A Xunit project for testing business logic implementation. It uses Moq for mocking data
+
 ## Integration with The Open Movie API
 This sample backend interacts directly with OMDb's API, specifically for the purpose of searching movies by title. You can read more about the API *http://www.omdbapi.com*.
 Communication with the API involves the use of a key, which can be found in the Appsetting file. Before sending a request to the OMDb API, the code checks the cache to see if the requested movie exists. This was implemented to reduce network calls and increase response time.
