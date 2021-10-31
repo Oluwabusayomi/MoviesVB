@@ -64,6 +64,7 @@ namespace MoviesVB.DomainServices.Movies
         public async Task<Movie> SearchMovieAsync(MovieQuery query)
         {
             ArgumentGuard.NotNull(query, nameof(query));
+
             ArgumentGuard.NotNullOrWhiteSpace(query.Title, nameof(query.Title));
 
             var movie = default(Movie);
@@ -101,6 +102,7 @@ namespace MoviesVB.DomainServices.Movies
 
             return _mapper.Map<IList<MovieInfo>>(queryResult);
         }
+
         public async Task<IList<RequestReport>> GetUsageReportAsync()
         {
             return await _movieRepository.GetUsageReportAsync();
@@ -108,7 +110,9 @@ namespace MoviesVB.DomainServices.Movies
 
         public async Task DeleteAsync(Guid movieId)
         {
-           await _movieRepository.DeleteAsync(movieId);
+            ArgumentGuard.NotEmpty(movieId, nameof(movieId));
+
+            await _movieRepository.DeleteAsync(movieId);
         }
 
         private async Task<Guid> AddMovieAsync(MovieInfo movie)
